@@ -1,0 +1,8 @@
+streamlit
+streamlit_image_select
+python-dotenv
+langchain
+openai
+tiktoken
+sentence-transformers
+chromadb
