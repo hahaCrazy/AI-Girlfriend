@@ -5,4 +5,5 @@ langchain
 openai
 tiktoken
 sentence-transformers
+pysqlite3-binary
 chromadb
