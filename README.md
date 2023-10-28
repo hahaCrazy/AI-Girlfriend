@@ -1,6 +1,10 @@
 # AI-Girlfriend
 Based on langchain and streamlit. The project used chatgpt-3.5 model.
 
+**Try It Now**
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ai-girlfriend.streamlit.app/)
+
+
 ## Function
 - Customize your own girlfriend
 - Chat context memory
