@@ -16,26 +16,26 @@ Based on langchain and streamlit. The project used chatgpt-3.5 model.
 - Note: Character picture information is stored using Chroma vector, that is, the prompt words and pictures correspond one to one. Call the tool of langchain agent to generate pictures
 
 ## 项目结构
----
+<pre>
 AI-Girlfriend
-|-.streamlit                         #streamlit项目的相关配置文件
-|    |-config.toml
-|    |-secrets.toml                  #存放密钥，代码中可直接用st.secrets["key"]来调用
-|-.venv                              #使用venv创建虚拟环境
-|                                    
-|-characters/agent_character         #角色资源
+|-.streamlit                        #streamlit项目的相关配置文件
+|   |-config.toml
+|   |-secrets.toml                  #存放密钥，代码中可直接用st.secrets["key"]来调用
+|-.venv                             #使用venv创建虚拟环境
+|
+|- characters/agent_character       #角色资源
 |            |-mina
-|              |-mina_info.json    #存放角色信息，如名字、外貌、性格、职业等
-|              |-mina_img.csv      #存放图片，每一张图片对应相应的提示词                    
-|              |-rias_gremory
-|              |-serena
-|            |  -sophia
+|               |-mina_info.json    #存放角色信息，如名字、外貌、性格、职业等
+|               |-mina_img.csv      #存放图片，每一张图片对应相应的提示词                    
+|            |-rias_gremory
+|            |-serena
+|            |-sophia
 |- gallery                      #streamlit ui资源
 |- home.py                      #程序的入口
 |- requirements.txt             #需要安装的库
 |- utils_prompt.py              #对chatgpt自定义的规则
 |- utils.py                     #需要用到的工具，如langchain的代理工具类的封装、chromadb矢量数据库
-
+</pre>
 ## 安装方法
 python -m venv .venv
 pip install -r requirements.txt
