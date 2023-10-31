@@ -16,6 +16,7 @@ Based on langchain and streamlit. The project used chatgpt-3.5 model.
 - Note: Character picture information is stored using Chroma vector, that is, the prompt words and pictures correspond one to one. Call the tool of langchain agent to generate pictures
 
 ## 项目结构
+---
 AI-Girlfriend
 |-.streamlit                        #streamlit项目的相关配置文件
 |   |-config.toml
