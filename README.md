@@ -18,18 +18,18 @@ Based on langchain and streamlit. The project used chatgpt-3.5 model.
 ## 项目结构
 ---
 AI-Girlfriend
-|-.streamlit                        #streamlit项目的相关配置文件
-|   |-config.toml
-|   |-secrets.toml                  #存放密钥，代码中可直接用st.secrets["key"]来调用
-|-.venv                             #使用venv创建虚拟环境
-|
-|- characters/agent_character       #角色资源
+|-.streamlit                         #streamlit项目的相关配置文件
+|    |-config.toml
+|    |-secrets.toml                  #存放密钥，代码中可直接用st.secrets["key"]来调用
+|-.venv                              #使用venv创建虚拟环境
+|                                    
+|-characters/agent_character         #角色资源
 |            |-mina
-|               |-mina_info.json    #存放角色信息，如名字、外貌、性格、职业等
-|               |-mina_img.csv      #存放图片，每一张图片对应相应的提示词                    
-|            |-rias_gremory
-|            |-serena
-|            |-sophia
+|              |-mina_info.json    #存放角色信息，如名字、外貌、性格、职业等
+|              |-mina_img.csv      #存放图片，每一张图片对应相应的提示词                    
+|              |-rias_gremory
+|              |-serena
+|            |  -sophia
 |- gallery                      #streamlit ui资源
 |- home.py                      #程序的入口
 |- requirements.txt             #需要安装的库
