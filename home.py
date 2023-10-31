@@ -28,7 +28,7 @@ if "page_index" not in st.session_state:
 if "sophia_index" not in st.session_state:
     st.session_state["sophia_index"] = random.randint(0, 2)
 
-characters = ["mina", "rias_gremory", "sophia"]
+characters = ["mina", "rias_gremory", "sophia", "serena"]
 
 #--------------------
 st.set_page_config(page_title=f"Girlfriend Chat", page_icon="👧")
@@ -42,12 +42,14 @@ with gallery_placeholder.container():
         images=[
             "./gallery/mina.png",
             "./gallery/rias_gremory.png",
-            "./gallery/sophia.png"
+            "./gallery/sophia.png",
+            "./gallery/serena.png"
         ],
         captions=[
             "Mina",
             "Rias Gremory",
-            "Sophia"
+            "Sophia",
+            "Serena"
         ],
         index=st.session_state["page_index"],
         return_value="index",
@@ -62,7 +64,7 @@ with gallery_placeholder.container():
 #加载角色数据---------------------------------------------------
 character_name = characters[st.session_state["page_index"]]
 data_folder = f"./characters/agent_character/{character_name}/"
-with open(f"{data_folder}/{character_name}_info.json", "r") as f:
+with open(f"{data_folder}{character_name}_info.json", "r") as f:
     info = json.load(f)
 #角色信息
 ai_name = info["character"]["name"]
@@ -143,7 +145,7 @@ class Bot():
                 system_message=system_message,
                 extra_prompt_messages=[MessagesPlaceholder(variable_name="history")]
             )
-        llm = ChatOpenAI(temperature = 0, streaming=True, max_tokens=100)
+        llm = ChatOpenAI(temperature = 0, streaming=True, max_tokens=500)
         # llm = AzureChatOpenAI(
         #         temperature=0,
         #         model_name="gpt-35-turbo",
@@ -187,10 +189,16 @@ class Bot():
             scene_index = -2
         agent_executor, llm, greet = agent_executor, llm, greet = self.setup_agent(ai_name, scene_index)
 
-        agent_executor.memory.chat_memory = self.msgs
-
         if len(self.msgs.messages) == 0:
+            #从数据库加载
+            # if st.session_state["page_index"] == 0:
+            #     self.msgs.add_user_message("你总是那么叛逆，有时候需要冷静下来。")
+            #     self.msgs.add_ai_message("""
+            #     冷静？我宁可疯狂！毕竟，我们只有一次生命，不是吗？"我是生活的恶魔，死亡的噩梦！"
+            #     """)
             self.msgs.add_ai_message(greet)
+        
+        agent_executor.memory.chat_memory = self.msgs
 
         for msg in self.msgs.messages:
             if msg.content:

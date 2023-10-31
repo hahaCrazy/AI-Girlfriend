@@ -1,11 +1,13 @@
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
+import platform
+os_name = platform.system()
+if os_name != "Windows":
+    __import__('pysqlite3')
+    import sys
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+    import sqlite3
 
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-import sqlite3
-print("sqlite version:", sqlite3.sqlite_version)
 
 from langchain.vectorstores import Chroma
 from langchain.callbacks.base import BaseCallbackHandler
