@@ -34,7 +34,7 @@ characters = ["mina", "rias_gremory", "sophia", "serena"]
 st.set_page_config(page_title=f"Girlfriend Chat", page_icon="👧")
 st.title(f'💬Chat With Your Girlfriend')
 
-#图片选择器，切换avatar
+# change avatar
 gallery_placeholder = st.empty()
 with gallery_placeholder.container():
     img_index = image_select(
@@ -56,17 +56,17 @@ with gallery_placeholder.container():
         use_container_width=False,
         key="avatar"
     )
-    #切换图片则重新刷新页面
+    # change avatar and refresh the page
     if st.session_state["page_index"] != img_index:
         st.session_state["page_index"] = img_index
         #st.rerun()
 
-#加载角色数据---------------------------------------------------
+# load character data---------------------------------------------------
 character_name = characters[st.session_state["page_index"]]
 data_folder = f"./characters/agent_character/{character_name}/"
 with open(f"{data_folder}{character_name}_info.json", "r") as f:
     info = json.load(f)
-#角色信息
+# character info
 ai_name = info["character"]["name"]
 ai_type = info["character"]["type"]
 desc = info["character"]["desc"]
@@ -75,12 +75,12 @@ interests = info["character"]["interests"]
 personality = info["character"]["personality"]
 occupation = info["character"]["occupation"]
 shared_memory = info["character"]["shared_memory"]
-#角色图片资源
+# character image resources
 introduce_img = f"{data_folder}{info['img']['introduce']}"
 page_icon = f"{data_folder}{info['img']['page_icon']}"
 ai_avatar = f"{data_folder}{info['img']['avatar']}"
 
-#个人信息-----
+# personal info-----
 tip1 = info["character"]["short_desc"]["occupation"]
 tip2 = info["character"]["short_desc"]["personality"]
 words = get_image_trigger(st.session_state["page_index"])
@@ -113,7 +113,7 @@ class Bot():
 
     @st.cache_resource(show_spinner="loading resources...")
     def setup_agent(_self, ai_name, scene_index = -1):
-        #获取规则信息
+        # get rule info
         rule1, rule_str = get_rules(ai_name)
 
         avatar_str = f"""{desc}
@@ -127,13 +127,12 @@ class Bot():
 
         greet = ""
         if scene_index >= 0:
-            #获取带有场景对话的内容
+            # get scene conversation info
             scene_str, greet = get_scene(1, scene_index)
             avatar_str += scene_str
         else:
             greet = f"Hi! I am your girlfriend {ai_name}. You can ask me anything."
 
-        #角色信息拼接
         prompt_str = f"""{avatar_str}
         {rule_str}
         """
@@ -182,20 +181,12 @@ class Bot():
     def main(self):
         #session_msg = st.expander("View the message contents in session state[streamlit]")
         human_avatar = "./img/human.jpg"
-
-        #获取大模型资源
         scene_index = st.session_state["sophia_index"] if st.session_state["page_index"] == 2 else -1 #对话场景的index
         if st.session_state["page_index"] == 0:
             scene_index = -2
         agent_executor, llm, greet = agent_executor, llm, greet = self.setup_agent(ai_name, scene_index)
 
         if len(self.msgs.messages) == 0:
-            #从数据库加载
-            # if st.session_state["page_index"] == 0:
-            #     self.msgs.add_user_message("你总是那么叛逆，有时候需要冷静下来。")
-            #     self.msgs.add_ai_message("""
-            #     冷静？我宁可疯狂！毕竟，我们只有一次生命，不是吗？"我是生活的恶魔，死亡的噩梦！"
-            #     """)
             self.msgs.add_ai_message(greet)
         
         agent_executor.memory.chat_memory = self.msgs
@@ -210,14 +201,12 @@ class Bot():
         if input := st.chat_input(placeholder=f"I'm your girlfriend {ai_name}. Ask me anything!"):
             print("question: " + input)
             st.chat_message("human", avatar=human_avatar).write(input)
-            #流式传输
             # with st.chat_message("ai", avatar=ai_avatar):
             #     llm.callbacks = [StreamHandler(st.empty())]
             #     response = agent_executor({"input": input})["output"]
             #     print("answer: *************")
             #     print(response)
             #     print("*************")
-            #非流式传输
             response = agent_executor({"input": input})["output"]
             st.chat_message("ai", avatar=ai_avatar).write(response)
             print("answer: *************")
