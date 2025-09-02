@@ -5,9 +5,6 @@ import streamlit as st
 import markdown
 from langchain.callbacks.base import BaseCallbackHandler
 
-# '''
-# https://github.com/kaarthik108/snowChat/blob/main/main.py
-# '''
 
 def format_message(text):
     """
