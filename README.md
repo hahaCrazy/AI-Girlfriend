@@ -15,38 +15,38 @@ Based on langchain and streamlit. The project used chatgpt-3.5 model.
 - streamlit + langchain + chatgpt
 - Note: Character picture information is stored using Chroma vector, that is, the prompt words and pictures correspond one to one. Call the tool of langchain agent to generate pictures
 
-## 项目结构
+## Project Structure
 <pre>
 AI-Girlfriend
-|-.streamlit                        #streamlit项目的相关配置文件
+|-.streamlit                        #Streamlit project configuration files
 |   |-config.toml
-|   |-secrets.toml                  #存放密钥，代码中可直接用st.secrets["key"]来调用
-|-.venv                             #使用venv创建虚拟环境
+|   |-secrets.toml                  #Store secrets. In code, you can directly call st.secrets[“key”] to retrieve them.
+|-.venv                             #Create a virtual environment using venv
 |
-|- characters/agent_character       #角色资源
+|- characters/agent_character       #Character Resources
 |            |-mina
-|               |-mina_info.json    #存放角色信息，如名字、外貌、性格、职业等
-|               |-mina_img.csv      #存放图片，每一张图片对应相应的提示词                    
+|               |-mina_info.json    #Store character information such as name, appearance, personality, occupation, etc.
+|               |-mina_img.csv      #Store images, with each image corresponding to its respective prompt word.                    
 |            |-rias_gremory
 |            |-serena
 |            |-sophia
-|- gallery                      #streamlit ui资源
-|- home.py                      #程序的入口
-|- requirements.txt             #需要安装的库
-|- utils_prompt.py              #对chatgpt自定义的规则
-|- utils.py                     #需要用到的工具，如langchain的代理工具类的封装、chromadb矢量数据库
+|- gallery                      #streamlit ui resource
+|- home.py                      #Program entry point
+|- requirements.txt             #Libraries that need to be installed
+|- utils_prompt.py              #Custom Rules for ChatGPT
+|- utils.py                     #Required tools, such as LangChain's proxy tool wrapper and Chromadb vector database
 </pre>
-## 安装方法
+## Installation Method
 python -m venv .venv
 pip install -r requirements.txt
 
-## 启动方法
+## Startup Method
 streamlit run .\home.py
 
-## 补充说明
-- 当页面内容发生改变时，streamlit会从上往下重新执行代码
-- st.session_state用于缓存数据，页面刷新时会被重置
-- @st.cache_resource用来缓存模型资源，将传递参数hash处理后返回对应的结果，保证下一次无需再次执行代码，可参考https://docs.streamlit.io/library/advanced-features/caching
+## Supplementary Notes
+- When page content changes, Streamlit re-executes the code from top to bottom.
+- st.session_state is used for caching data and will be reset when the page refreshes.
+- @st.cache_resource is used to cache model resources. It processes the passed parameter hash and returns the corresponding result, ensuring the code does not need to be executed again on subsequent requests. For reference, see https://docs.streamlit.io/library/advanced-features/caching.
 
 ![g1](https://github.com/hahaCrazy/AI-Girlfriend/assets/29449583/ec22a52c-0f61-4857-928e-911d4ab9af03)
 ![g2](https://github.com/hahaCrazy/AI-Girlfriend/assets/29449583/dd2120cb-8a10-4d69-b216-5b07b4eb8929)
