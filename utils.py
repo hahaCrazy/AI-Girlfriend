@@ -28,11 +28,7 @@ def enable_chat_history(func):
 
 
 class Toolset:
-    """
-    工具集，用来存放所有的工具方法
-    """
     def __init__(self, path):
-        #从csv文件中初始化得到db
         self.db = self._init_csv_db(path)
 
     def get_db_image(self, prompt: str) -> str:
@@ -55,11 +51,7 @@ class Toolset:
     def get_avatar_info(self):
         pass
     
-    #----内部方法------
     def _init_csv_db(_self, file_path):
-        """
-        从csv文件中初始化db
-        """
         doc_list = []
         with open(file_path, "r") as file:
             reader = csv.reader(file)
@@ -73,18 +65,13 @@ class Toolset:
         name, ext = os.path.splitext(file_name)
 
         #db = Chroma.from_documents(doc_list, embedding=embeddings, persist_directory="./info_db")
-        #db持久化保存到本地
         #db.persist()
         db = Chroma.from_documents(doc_list, embedding=embeddings, collection_name=name)
-        #TODO db无论如何都会返回数据
         #res = db.similarity_search(query="", k=1)
         #print(json.loads(res[0].page_content)[2])
         return db
     
     def _get_csv_db(self, folder_path):
-        """
-        从已有的db文件中加载db
-        """
         #embeddings = OpenAIEmbeddings()
         embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
